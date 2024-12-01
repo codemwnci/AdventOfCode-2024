@@ -17,7 +17,7 @@ class Day01 {
     }
 
     fun puzzle2() {
-        //left.sumOf { first -> right.count { it == first } * first  }.printAnswer()
+        //left.sumOf { first -> right.count { it == first } * first }.printAnswer()
         val counts = right.groupingBy { it }.eachCount() // optimise by calculating counts once -- not massively needed, but saves a few millis
         left.sumOf { counts.getOrDefault(it, 0) * it }.printAnswer()
     }
