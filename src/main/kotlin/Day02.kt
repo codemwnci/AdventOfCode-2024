@@ -11,7 +11,7 @@ class Day02 {
     fun puzzle1() {
         val reports = file.readLines().map { it.split(" ").map { it.toLong() } }
         val allDec = reports.count { it.windowed(2, 1).all { it[0] - it[1] in 1..3 } }
-        val allAcc = reports.count { it.windowed(2, 1).all { it[1] - it[0] in 1..3} }
+        val allAcc = reports.count { it.windowed(2, 1).all { it[1] - it[0] in 1..3 } }
 
         println(allAcc + allDec)
     }
@@ -22,7 +22,7 @@ class Day02 {
         val reports = file.readLines().map { it.split(" ").map { it.toLong() } }
         // we can simply test all variations with one element removed (because those valid in part1 will be still valid with the first element removed
         val allDec = reports.count { it.oneRemoved().any { it.windowed(2, 1).none { it[0] - it[1] !in 1..3 } } }
-        val allAcc = reports.count { it.oneRemoved().any { it.windowed(2, 1).none { it[1] - it[0] !in 1..3} } }
+        val allAcc = reports.count { it.oneRemoved().any { it.windowed(2, 1).none { it[1] - it[0] !in 1..3 } } }
 
         println(allAcc + allDec)
     }
