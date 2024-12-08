@@ -10,6 +10,8 @@ fun <T> ArrayDeque<T>.peek() = lastOrNull()
 
 fun <T> priorityQueueOf(vararg args: T): PriorityQueue<T> = PriorityQueue<T>().also { it.addAll(args) }
 
+fun <T> List<T>.subListFrom(from: Int) = this.subList(from, this.lastIndex)
+
 fun <T> List<T>.split(predicate: (T) -> Boolean): List<List<T>> = fold(mutableListOf(mutableListOf<T>())) { acc, t ->
     if (predicate(t)) acc.add(mutableListOf())
     else acc.last().add(t)
@@ -23,6 +25,7 @@ fun <T> List<T>.combinations(size: Int): List<List<T>> = when (size) {
 operator fun <T> List<T>.component6(): T { return this[5] }
 
 fun Any.printAnswer() = println("Answer: ${this}")
+fun Any.printAnswer(part: String) = println("Answer $part: $this")
 
 fun lcm(values: Collection<Number>) = values.fold(1L) { acc, i -> lcm(acc, i.toLong()) }
 private fun lcm(a:Long, b:Long): Long {
