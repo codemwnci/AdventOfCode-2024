@@ -18,6 +18,8 @@ fun <T> List<T>.split(predicate: (T) -> Boolean): List<List<T>> = fold(mutableLi
     acc
 }
 
+fun List<String>.splitOnBlank(): List<List<String>> = this.split { it.isBlank() }
+
 fun <T> List<T>.combinations(size: Int): List<List<T>> = when (size) {
     0 -> listOf(listOf())
     else -> flatMapIndexed { idx, element -> drop(idx + 1).combinations(size - 1).map { listOf(element) + it } }
