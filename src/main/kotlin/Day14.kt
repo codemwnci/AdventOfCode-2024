@@ -24,9 +24,10 @@ class Day14 {
         }
     }
 
+    private val w = 101
+    private val h = 103
+
     fun puzzle1() {
-        val w = 101
-        val h = 103
         val robotsAfterMove = (0 until 100).fold(robots) { list, _ ->
             list.map {
                 val (p, v) = it
@@ -46,9 +47,6 @@ class Day14 {
     // Based on comments on Reddit, it appears that if all robots are in a unique position, the Xmas tree appears
     // so simply keep moving the robots until all are unique (i.e. distinct count of positions == number of robots)
     fun puzzle2() {
-        val w = 101
-        val h = 103
-
         (1 .. 100_000).fold(robots) { list, t ->
             list.map {
                 val (p, v) = it
