@@ -57,7 +57,7 @@ class Day17 {
         runComp(program, register).joinToString(",").printAnswer()
     }
 
-    // Brute for wasn't going to work, and parallel maps weren't making a difference.
+    // Brute force wasn't going to work, and parallel maps weren't making a difference.
     // Found a helpful approach --> https://pastebin.com/raw/7DC2mf9g. The following reasoning, taken from the pastebin
 //This program loops while a > 0, dividing a by 8 every iteration.  Each iteration outputs one value, solely
 //derived from the value of a % 8 at the beginning of the iteration.  Thus each iteration is completely independent
