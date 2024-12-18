@@ -16,9 +16,9 @@ class Day18 {
     data class XY(val x: Int, val y:Int) {
         fun move(other: XY) = XY(x+other.x, y+other.y)
         fun isInBound(end: XY) = (x in 0..end.x && y in 0..end.y)
+        fun manhattan(end: XY): Int = abs(this.y - end.y) + abs(this.x - end.x)
     }
 
-    private fun XY.manhattan(end: XY): Int = abs(this.y - end.y) + abs(this.x - end.x)
     private fun walkGrid(fallenBytes: List<XY>): Int {
         val start = XY(0,0)
         val end = XY(70,70)
