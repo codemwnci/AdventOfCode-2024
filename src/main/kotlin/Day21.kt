@@ -18,38 +18,12 @@ class Day21 {
     private val dirPad = listOf(" ^A".toList(), "<v>".toList())
 
     private fun List<List<Char>>.xyOf(c: Char): XY = this.flatMapIndexed { y, row -> row.mapIndexedNotNull { x, ch -> if (ch==c) XY(x, y) else null } }.single()
-    private fun buildButtonPresses(dist: Int, charPos: Char, charNeg: Char) = (if (dist > 0) charPos else charNeg).toString().repeat(abs(dist))
 
-    fun puzzle1() {
-        val pads = listOf(numPad, dirPad, dirPad)
-        fun shortestSequence(code: String, padIdx: Int = 0): Int {
-            if (padIdx == pads.size) return code.length
-
-            val p = pads[padIdx]
-            val blank = p.xyOf(' ')
-            var len = 0
-            var (sx, sy) = p.xyOf('A')
-            for (num in code) {
-                val xy = p.xyOf(num)
-                val vert = buildButtonPresses(xy.y - sy, 'v', '^')
-                val horz = buildButtonPresses(xy.x - sx, '>', '<')
-
-                len += minOf(
-                    if (XY(sx, xy.y) != blank) shortestSequence(vert+horz+"A", padIdx+1) else Int.MAX_VALUE,
-                    if (XY(xy.x, sy) != blank) shortestSequence(horz+vert+"A", padIdx+1) else Int.MAX_VALUE
-                )
-                sx = xy.x
-                sy = xy.y
-            }
-            return len
-        }
-
-        file.readLines().sumOf { shortestSequence(it) * it.take(3).toInt() }.printAnswer()
-    }
-
-    fun puzzle2() {
-        val pads = listOf(numPad) + List(25) { dirPad }
+    private fun findShortest(code: String, dirPads:Int = 2): Long {
+        val pads = listOf(numPad) + List(dirPads) { dirPad }
         val caches = Array(pads.size) { HashMap<String, Long> () }
+
+        fun buildButtonPresses(dist: Int, charPos: Char, charNeg: Char) = (if (dist > 0) charPos else charNeg).toString().repeat(abs(dist))
         fun shortestSequence(code: String, padIdx: Int = 0): Long {
             if (padIdx == pads.size) return code.length.toLong()
 
@@ -63,8 +37,8 @@ class Day21 {
                     val vert = buildButtonPresses(xy.y - sy, 'v', '^')
                     val horz = buildButtonPresses(xy.x - sx, '>', '<')
                     len += minOf(
-                        if (XY(sx, xy.y) != blank) shortestSequence(vert+horz+"A", padIdx+1) else Long.MAX_VALUE,
-                        if (XY(xy.x, sy) != blank) shortestSequence(horz+vert+"A", padIdx+1) else Long.MAX_VALUE
+                        if (XY(sx, xy.y) != blank) shortestSequence(vert + horz + "A", padIdx + 1) else Long.MAX_VALUE,
+                        if (XY(xy.x, sy) != blank) shortestSequence(horz + vert + "A", padIdx + 1) else Long.MAX_VALUE
                     )
                     sx = xy.x
                     sy = xy.y
@@ -72,7 +46,9 @@ class Day21 {
                 len
             }
         }
-
-        file.readLines().sumOf { shortestSequence(it) * it.take(3).toInt() }.printAnswer()
+        return shortestSequence(code)
     }
+
+    fun puzzle1() { file.readLines().sumOf { findShortest(it, 2) * it.take(3).toInt() }.printAnswer() }
+    fun puzzle2() { file.readLines().sumOf { findShortest(it, 25) * it.take(3).toInt() }.printAnswer() }
 }
